@@ -31,18 +31,21 @@ After the explanation about the Callbacks on Ironhack you have fallen into a com
 ### MVP
 
 - main.js
-  - startGame();
+  - buildSplash();
+  - destroySplash();
+  - startGame();  
+  - destroyGame();
+  - buildGameOver(isWin);
+  - destroyGameOver();
 
 - game.js
   - class RenderMap
   - class Game
-    - splashScreen();
-    - winScreen();
-    - deadScreen();
-    - updateState();
-    - checkCollisions();
-    - timer();
-    - isEnd();
+  time
+  isWin = false;
+  isEnd = false;
+    - update();
+    - checkCollisions();        
     - defineKeys();
 
 - player.js
