@@ -1,8 +1,8 @@
 # The Walking Hack 
 
-## About 
+## Description 
 
-Después de recibir la explicación sobre los Callbacks en Ironhack caes en coma y te despiertas al tiempo de nuevo en Ironhack en un mundo postapocalíptico. Todo está lleno de profes, TAs y staff zombie. La única manera de sobrevivir es volver a la salida a tiempo antes de que el setInterval te pille, pero cuidado no será fácil.
+After the explanation about the Callbacks on Ironhack you have fallen into a coma. Later, you have woken up again on Ironhack but in a post-apocalyptic world. Now, the teachers, TAs and staff of Ironhack are ZOMBIES. The only way to survive is return to the exit on time before the setInterval catches you, but beware it will not be easy.
 
 ## Tech
 
@@ -10,14 +10,14 @@ Después de recibir la explicación sobre los Callbacks en Ironhack caes en coma
 
 ## States
 
-- Main Menu
+- Main menu
 - Gameplay
   - Win
   - Lose
 
 ### States possible improvement
 
-- Menú principal
+- Main menu
   - Start
   - Instructions
 - Intro
@@ -64,65 +64,65 @@ bullets.js
 
 ### MVP 
 
-- Pantalla de menú inicial con botón start e instrucciones justo debajo.
-- Mapa con punto de inicio y punto de salida del mapa/laberinto.
-- Control de colisiones con el mapa.
-- Un tiempo para completar el mapa y si no game over.
-- Si llegas a la salida en el tiempo pantalla de win y si no pantalla de game over con botón de restart.
-- Mapa definido de tiles de 16x16.
+- Initial menu screen with start button and instructions just below.
+- Map with starting point and exit point of the labyrinth.
+- Map collisions control.
+- Countdown time to complete the map. 
+- If you arrive at the exit on time you win, if not you died, all of two goes to the restart screen.
+- Defined map 16x16 tiles.
 
 ### Backlogs 
 
 #### Iteration 1: Keys
 
-- Definir objetos llaves.
-- Puertas que se abren con las llaves.
+- Define keys objects.
+- Doors that open with the keys.
 
-#### Iteration 2: Enemys 
+#### Iteration 2: Enemies 
 
-- Definir enemigos.
-- Comportamientos deterministas que se mueven en una dirección.
-- Cambian cuando colisionan con paredes o te matan.
+- Define enemies.
+- Deterministic behaviors that move in one direction.
+- They change when they collide with walls or they kill you.
 
 #### Iteration 3: Sprites 
 
-- Seleccionar sprites.
-- Cargar la sprite-sheet completa en png.
-- Recortar la parte necesaria del png para cada objeto.
+- Select sprites.
+- Load the complete sprite-sheet in png.
+- Cut the necessary part of the PNG for each object.
 
 #### Iteration 4: Bullets
 
-- Disparos con balas para matar enemigos.
+- Player shooting with bullets to kill enemies.
 
 #### Iteration 5: Sounds
 
-- Músicas:
-  - Menú principal.
-  - Juego.
-  - Pantalla win.
-  - Pantalla muerte.
-- Efectos de sonido:
-  - Coger llaves.
-  - Disparar.
-  - Llegar a la salida.
-  - Muerte del personaje.
-  - Muerte del enemigo.
+- Musics:
+  - Main menu
+  - Gameplay
+  - Win screen
+  - Dead screen
+- Sound effects:
+  - Take key
+  - Shoot
+  - Arrive goal
+  - Player dead
+  - Enemy dead
 
 #### Iteration 6: New Phases
 
-- Pantalla 2. 
-- Pantalla 3.
+- Phase 2 
+- Phase 3
 
 ### Misc
 
-- definir objetos de control como:
-  - paredes 
-  - items 
-  - puertas 
-  - entrada 
-  - salida 
-  - enemigos 
-  - balas
+- define control objects such as:
+   - walls
+   - items
+   - doors
+   - entry
+   - departure
+   - enemies
+   - bullets
   
 ### Trello
 
