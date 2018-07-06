@@ -68,7 +68,7 @@ bullets.js
 - Map with starting point and exit point of the labyrinth.
 - Map collisions control.
 - Countdown time to complete the map. 
-- If you arrive at the exit on time you win, if not you died, all of two goes to the restart screen.
+- If you arrive at the exit on time you win, if not you die, all of two goes to the restart screen.
 - Defined map 16x16 tiles.
 
 ### Backlogs 
