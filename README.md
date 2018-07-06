@@ -1,10 +1,10 @@
 # The Walking Hack 
 
-## About: 
+## About 
 
 Después de recibir la explicación sobre los Callbacks en Ironhack caes en coma y te despiertas al tiempo de nuevo en Ironhack en un mundo postapocalíptico. Todo está lleno de Profes, TAs y staff zombie. La única manera de sobrevivir es volver a la salida a tiempo antes de que el setInterval te pille, pero cuidado no será fácil.
 
-## Tech: 
+## Tech
 
 - Canvas
 
@@ -25,7 +25,7 @@ Después de recibir la explicación sobre los Callbacks en Ironhack caes en coma
   - Win
   - Lose
 
-## Data structures: 
+## Data structures
 
 ### MVP
 
@@ -59,8 +59,7 @@ enemy.js
 bullets.js
 - class Bullets
 
-## Tasks:
-
+## Tasks
 
 ### MVP 
 
@@ -108,7 +107,7 @@ bullets.js
   - Muerte del personaje.
   - Muerte del enemigo.
 
-### Iteración 6: New Phases
+#### Iteración 6: New Phases
 
 - Pantalla 2. 
 - Pantalla 3.
