@@ -116,13 +116,13 @@ bullets.js
 ### Misc
 
 - define control objects such as:
-   - walls
-   - items
-   - doors
-   - entry
-   - departure
-   - enemies
-   - bullets
+  - walls
+  - items
+  - doors
+  - entry
+  - departure
+  - enemies
+  - bullets
   
 ### Trello
 
