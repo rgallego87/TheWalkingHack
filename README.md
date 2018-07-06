@@ -1,6 +1,4 @@
-####################
-# The Walking Hack #
-####################
+# The Walking Hack 
 
 ## About: 
 
@@ -63,9 +61,8 @@ bullets.js
 
 ## Tasks:
 
-######### 
-### MVP #  
-#########
+
+### MVP 
 
 - Pantalla de menú inicial con botón start e instrucciones justo debajo.
 - Mapa con punto de inicio y punto de salida del mapa/laberinto.
@@ -74,42 +71,30 @@ bullets.js
 - Si llegas a la salida en el tiempo pantalla de win y si no pantalla de game over con botón de restart.
 - Mapa definido de tiles de 16x16.
 
-############## 
-### Backlogs #  
-##############
+### Backlogs 
 
-######################### 
-#### Iteración 1: Keys  #  
-#########################
+#### Iteración 1: Keys
 
 - Definir objetos llaves.
 - Puertas que se abren con las llaves.
 
-########################## 
-#### Iteración 2: Enemys #  
-##########################
+#### Iteración 2: Enemys 
 
 - Definir enemigos.
 - Comportamientos deterministas que se mueven en una dirección.
 - Cambian cuando colisionan con paredes o te matan.
 
-########################### 
-#### Iteración 3: Sprites #  
-###########################
+#### Iteración 3: Sprites 
 
 - Seleccionar sprites.
 - Cargar la sprite-sheet completa en png.
 - Recortar la parte necesaria del png para cada objeto.
 
-###########################
-#### Iteración 4: Bullets #  
-###########################
+#### Iteración 4: Bullets
 
 - Disparos con balas para matar enemigos.
 
-########################## 
-#### Iteración 5: Sounds #  
-##########################
+#### Iteración 5: Sounds
 
 - Músicas:
   - Menú principal.
@@ -123,9 +108,7 @@ bullets.js
   - Muerte del personaje.
   - Muerte del enemigo.
 
-############################# 
-### Iteración 6: New Phases #  
-#############################
+### Iteración 6: New Phases
 
 - Pantalla 2. 
 - Pantalla 3.
