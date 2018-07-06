@@ -14,44 +14,44 @@ Después de recibir la explicación sobre los Callbacks en Ironhack caes en coma
 
 - Main Menu
 - Gameplay
--- Win
--- Lose
+  - Win
+  - Lose
 
 ### States possible improvement
 
 - Menú principal
--- Start
--- Instructions
+  - Start
+  - Instructions
 - Intro
 - Gameplay
--- Win
--- Lose
+  - Win
+  - Lose
 
 ## Data structures: 
 
 ### MVP
 
 - main.js
--- startGame();
+  - startGame();
 
 - game.js
--- class RenderMap
--- class Game
---- splashScreen();
---- winScreen();
---- deadScreen();
---- checkCollisions();
---- timer();
---- isEnd();
---- defineKeys();
+  - class RenderMap
+  - class Game
+    - splashScreen();
+    - winScreen();
+    - deadScreen();
+    - checkCollisions();
+    - timer();
+    - isEnd();
+    - defineKeys();
 
 - player.js
--- class Player
---- movement();
---- moveUp();
---- moveRight();
---- moveDown();
---- moveLeft();
+  - class Player
+    - movement();
+    - moveUp();
+    - moveRight();
+    - moveDown();
+    - moveLeft();
 
 ### Backlogs
 
@@ -59,7 +59,7 @@ enemy.js
 - class Enemy
 
 bullets.js
-- class bullets
+- class Bullets
 
 ## Tasks:
 
@@ -112,16 +112,16 @@ bullets.js
 ##########################
 
 - Músicas:
--- Menú principal.
--- Juego.
--- Pantalla win.
--- Pantalla muerte.
+  - Menú principal.
+  - Juego.
+  - Pantalla win.
+  - Pantalla muerte.
 - Efectos de sonido:
--- Coger llaves.
--- Disparar.
--- Llegar a la salida.
--- Muerte del personaje.
--- Muerte del enemigo.
+  - Coger llaves.
+  - Disparar.
+  - Llegar a la salida.
+  - Muerte del personaje.
+  - Muerte del enemigo.
 
 ############################# 
 ### Iteración 6: New Phases #  
@@ -133,10 +133,10 @@ bullets.js
 ### Misc
 
 - definir objetos de control como:
--- paredes 
--- items 
--- puertas 
--- entrada 
--- salida 
--- enemigos 
--- balas
+  - paredes 
+  - items 
+  - puertas 
+  - entrada 
+  - salida 
+  - enemigos 
+  - balas
