@@ -10,10 +10,10 @@ After the explanation about the Callbacks on Ironhack you have fallen into a com
 
 ## States
 
-- Main menu (gamestart)
+- Main menu (gameStart)
 - Gameplay (destroySplash)
-  - Win (endplay)
-  - Lose (endplay)
+  - Win (endPlay)
+  - Lose (endPlay)
 - Back (restart)
 
 ### States possible improvement
