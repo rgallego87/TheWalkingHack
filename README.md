@@ -38,6 +38,7 @@ Después de recibir la explicación sobre los Callbacks en Ironhack caes en coma
     - splashScreen();
     - winScreen();
     - deadScreen();
+    - updateState();
     - checkCollisions();
     - timer();
     - isEnd();
