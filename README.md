@@ -2,7 +2,7 @@
 
 ## About 
 
-Después de recibir la explicación sobre los Callbacks en Ironhack caes en coma y te despiertas al tiempo de nuevo en Ironhack en un mundo postapocalíptico. Todo está lleno de Profes, TAs y staff zombie. La única manera de sobrevivir es volver a la salida a tiempo antes de que el setInterval te pille, pero cuidado no será fácil.
+Después de recibir la explicación sobre los Callbacks en Ironhack caes en coma y te despiertas al tiempo de nuevo en Ironhack en un mundo postapocalíptico. Todo está lleno de profes, TAs y staff zombie. La única manera de sobrevivir es volver a la salida a tiempo antes de que el setInterval te pille, pero cuidado no será fácil.
 
 ## Tech
 
