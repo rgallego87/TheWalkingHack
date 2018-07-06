@@ -73,28 +73,28 @@ bullets.js
 
 ### Backlogs 
 
-#### Iteración 1: Keys
+#### Iteration 1: Keys
 
 - Definir objetos llaves.
 - Puertas que se abren con las llaves.
 
-#### Iteración 2: Enemys 
+#### Iteration 2: Enemys 
 
 - Definir enemigos.
 - Comportamientos deterministas que se mueven en una dirección.
 - Cambian cuando colisionan con paredes o te matan.
 
-#### Iteración 3: Sprites 
+#### Iteration 3: Sprites 
 
 - Seleccionar sprites.
 - Cargar la sprite-sheet completa en png.
 - Recortar la parte necesaria del png para cada objeto.
 
-#### Iteración 4: Bullets
+#### Iteration 4: Bullets
 
 - Disparos con balas para matar enemigos.
 
-#### Iteración 5: Sounds
+#### Iteration 5: Sounds
 
 - Músicas:
   - Menú principal.
@@ -108,7 +108,7 @@ bullets.js
   - Muerte del personaje.
   - Muerte del enemigo.
 
-#### Iteración 6: New Phases
+#### Iteration 6: New Phases
 
 - Pantalla 2. 
 - Pantalla 3.
