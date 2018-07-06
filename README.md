@@ -123,3 +123,11 @@ bullets.js
   - salida 
   - enemigos 
   - balas
+  
+### Trello
+
+[The Walking Hack tasks kanban board](https://trello.com/b/sIacF3LK/the-walking-hack)
+
+### Github
+
+[Repo](https://github.com/rgallego87/TheWalkingHack)
