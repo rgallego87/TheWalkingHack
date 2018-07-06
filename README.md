@@ -69,11 +69,22 @@ bullets.js
 ### MVP 
 
 - Initial menu screen with start button and instructions just below.
+  - Menu screen button start.
+  - Gameplay screen.
+  - End screen button restart.
 - Map with starting point and exit point of the labyrinth.
+  - Define map 16x16 tiles.
+  - Render map.
+  - Render player.
 - Map collisions control.
-- Countdown time to complete the map. 
+  - Walls.
+  - End point.
+- Countdown time to complete the map.
+  - Control to end game.
+  - Render on screen.
 - If you arrive at the exit on time you win, if not you die, all of two goes to the restart screen.
-- Defined map 16x16 tiles.
+  - Win arriving.
+  - Die.
 
 ### Backlogs 
 
