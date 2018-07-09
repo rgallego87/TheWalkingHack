@@ -41,6 +41,24 @@ function main() {
     wallChar:   'W',
     floorChar:  'F',
     playerChar: 'P',
+    map: [
+      ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
+      ["W","F","F","W","F","F","F","W","F","W","W","F","W","F","F","W"],
+      ["W","W","F","W","F","W","W","W","W","F","F","W","W","F","W","W"],
+      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+      ["W","F","F","F","W","F","W","F","F","W","W","F","F","F","F","W"],
+      ["W","F","F","F","W","F","W","F","F","F","F","F","W","W","W","W"],
+      ["W","W","W","W","W","F","W","W","W","W","W","W","W","F","F","W"],
+      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+      ["W","F","F","F","F","F","F","F","F","F","F","F","F","W","W","W"],
+      ["W","F","F","F","F","F","F","F","F","F","F","F","F","W","W","W"],
+      ["W","F","W","F","W","W","F","F","F","F","F","F","F","W","W","W"],
+      ["W","F","W","F","W","W","F","F","F","F","F","F","F","F","F","W"],
+      ["W","F","W","F","F","W","F","F","F","F","F","F","F","F","F","W"],
+      ["W","W","W","F","F","W","W","W","W","W","W","W","W","W","W","W"],
+      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+      ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
+    ],    
   });
   
   function buildSplash() {    
@@ -53,13 +71,23 @@ function main() {
      startGame();
   }
   
+  // DEV MODE: Key to game over
+  function escapeDEV(e){
+    var keyCode = e.keyCode;
+    if(keyCode == 27){
+      buildGameOver();
+    }
+  };
+  
   function startGame() {
     document.body.appendChild(canvas);
     
-    game._drawMap();
+    game._defineControlKeys();
+    game._update();    
 
     // intervalID = window.setInterval(buildGameOver, 2000);
-    window.addEventListener('keydown', buildGameOver);    // DEV MODE: Key to game over
+    window.addEventListener('keydown', escapeDEV);    // DEV MODE: Key to game over
+    
   }
 
   function buildGameOver() {
@@ -71,7 +99,7 @@ function main() {
   function destroyGameOver() {
     gameOver.remove();
     // clearInterval(intervalID);
-    window.removeEventListener('keydown',buildGameOver);  // DEV MODE: Key to game over
+    window.removeEventListener('keydown', escapeDEV);  // DEV MODE: Key to game over
     buildSplash();
   }
   buildSplash();

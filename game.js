@@ -2,28 +2,14 @@ function Game(options) {
   this.ctx          = options.ctx;
   this.rows         = options.rows;
   this.cols         = options.cols;
-  this.wallChar     = options.wallChar;   // Control character for walls
-  this.floorChar    = options.floorChar;  // Control character for floor
-  
-
-  this.map          = [
-  ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-  ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
-];
+  this.wallChar     = options.wallChar;     // Control character for walls
+  this.floorChar    = options.floorChar;    // Control character for floor
+  this.playerChar   = options.playerChar;   // Control character for player
+  this.map          = options.map;
+  this.player       = new Player({
+    currentRow: 14, // InitialPlayerPos
+    currentCol: 14, // InitialPlayerPos   
+  });
     
 }
 
@@ -34,17 +20,30 @@ Game.prototype._drawMap = function () {
       
       if (this.map[colIndex][rowIndex] === this.wallChar){
         this.ctx.fillStyle = 'red';
-        this.ctx.fillRect(colIndex * 50, rowIndex * 50, 48, 48);
+        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 48, 48); // Remove 2px margin when using sprites
       }
       else if (this.map[colIndex][rowIndex] === this.floorChar) {
         this.ctx.fillStyle = 'blue';
-        this.ctx.fillRect(colIndex * 50, rowIndex * 50, 48, 48);
-      } 
+        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 48, 48); // Remove 2px margin when using sprites
+      }
     }
   }
 }
 
-Game.prototype._defineKeys = function () {
+// Drawing player on map
+Game.prototype._drawPlayer = function() {
+  console.log(this.player);
+  this.ctx.fillStyle = 'green';
+  this.ctx.fillRect(this.player.currentRow * 50, this.player.currentCol * 50, 48, 48); // Remove 2px margin when using sprites
+}
+
+Game.prototype._update = function() {
+  this._drawMap();
+  this._drawPlayer();  
+  // window.requestAnimationFrame(this._update.bind(this));
+}
+
+Game.prototype._defineControlKeys = function () {
   document.onkeydown = function (e) {
     switch (e.keyCode) {
       case 38: // UP
@@ -64,5 +63,7 @@ Game.prototype._defineKeys = function () {
         this.player.goRight();
         break;       
     }
+    this._update();
+    
   }.bind(this);
 }

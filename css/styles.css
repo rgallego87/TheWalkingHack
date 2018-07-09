@@ -1,3 +1,7 @@
+body {
+  overflow: hidden;
+}
+
 #main-menu {
   background-image: url(../img/TWD_Splash1.jpg);
   background-size:cover;
