@@ -1,12 +1,45 @@
 function Game(options) {
-  this.ctx = options.ctx;
+  this.ctx          = options.ctx;
+  this.rows         = options.rows;
+  this.cols         = options.cols;
+  this.wallChar     = options.wallChar;   // Control character for walls
+  this.floorChar    = options.floorChar;  // Control character for floor
+  
+
+  this.map          = [
+  ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+  ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
+];
+    
 }
 
-Game.prototype._drawBoard = function () {
-  for (var columnIndex = 0; columnIndex < this.columns; columnIndex++) {
+// Drawing on canvas the map
+Game.prototype._drawMap = function () {
+  for (var colIndex = 0; colIndex < this.cols; colIndex++) {
     for (var rowIndex = 0; rowIndex < this.rows; rowIndex++) {
-      this.ctx.fillStyle = '#E3D4AB';
-      this.ctx.fillRect(columnIndex * 10, rowIndex * 10, 10, 10);
+      
+      if (this.map[colIndex][rowIndex] === this.wallChar){
+        this.ctx.fillStyle = 'red';
+        this.ctx.fillRect(colIndex * 50, rowIndex * 50, 48, 48);
+      }
+      else if (this.map[colIndex][rowIndex] === this.floorChar) {
+        this.ctx.fillStyle = 'blue';
+        this.ctx.fillRect(colIndex * 50, rowIndex * 50, 48, 48);
+      } 
     }
   }
 }

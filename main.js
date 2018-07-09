@@ -15,7 +15,7 @@ function main() {
   var canvas = document.createElement('canvas');
   canvas.setAttribute('id', 'main');
   canvas.setAttribute('width', 800);
-  canvas.setAttribute('height', 600);
+  canvas.setAttribute('height', 800);
 
   // Building Game Over
   var gameOver = document.createElement('div');
@@ -31,6 +31,18 @@ function main() {
   // Timer
   var intervalID;
 
+  // Constructing the game  
+  var ctx = canvas.getContext('2d');
+
+  var game = new Game({
+    rows:       canvas.width / 50,
+    cols:       canvas.height / 50,    
+    ctx:        ctx,
+    wallChar:   'W',
+    floorChar:  'F',
+    playerChar: 'P',
+  });
+  
   function buildSplash() {    
     document.body.appendChild(mainMenu);
     mainMenu.appendChild(startButton);
@@ -44,7 +56,10 @@ function main() {
   function startGame() {
     document.body.appendChild(canvas);
     
-    intervalID = window.setInterval(buildGameOver, 2000);
+    game._drawMap();
+
+    // intervalID = window.setInterval(buildGameOver, 2000);
+    window.addEventListener('keydown', buildGameOver);    // DEV MODE: Key to game over
   }
 
   function buildGameOver() {
@@ -55,7 +70,8 @@ function main() {
 
   function destroyGameOver() {
     gameOver.remove();
-    clearInterval(intervalID);
+    // clearInterval(intervalID);
+    window.removeEventListener('keydown',buildGameOver);  // DEV MODE: Key to game over
     buildSplash();
   }
   buildSplash();
