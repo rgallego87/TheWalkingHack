@@ -5,6 +5,7 @@ function Game(options) {
   this.wallChar     = options.wallChar;     // Control character for walls
   this.floorChar    = options.floorChar;    // Control character for floor
   this.playerChar   = options.playerChar;   // Control character for player
+  this.goalChar     = options.goalChar;   // Control character for goal
   this.map          = options.map;
   this.player       = new Player({
     currentRow: 14, // InitialPlayerPos
@@ -24,6 +25,10 @@ Game.prototype._drawMap = function () {
       else if (this.map[colIndex][rowIndex] === this.floorChar) {
         this.ctx.fillStyle = 'blue';
         this.ctx.fillRect(rowIndex * 50, colIndex * 50, 48, 48); // Remove 2px margin when using sprites
+      }
+      else if (this.map[colIndex][rowIndex] === this.goalChar) {
+        this.ctx.fillStyle = 'yellow';
+        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 48, 48); // Remove 2px margin when using sprites  
       }
     }
   }
@@ -70,10 +75,17 @@ Game.prototype._checkCollisions = function() {
     }
 }
 
+Game.prototype._checkGoal = function() {
+  if (this.map[this.player.currentCol][this.player.currentRow] === this.goalChar) {
+    console.log('GOAL!!');
+  }
+}
+
 Game.prototype._update = function() {
   this._drawMap();
-  this._drawPlayer();  
-  // window.requestAnimationFrame(this._update.bind(this));
+  this._drawPlayer();
+  this._checkGoal();    
+  window.requestAnimationFrame(this._update.bind(this));
 }
 
 Game.prototype._defineControlKeys = function () {
@@ -100,7 +112,6 @@ Game.prototype._defineControlKeys = function () {
         this._checkCollisions();
         break;       
     }
-    this._update();
 
   }.bind(this);
 }

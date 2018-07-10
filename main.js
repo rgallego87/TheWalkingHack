@@ -41,11 +41,12 @@ function main() {
     wallChar:   'W',
     floorChar:  'F',
     playerChar: 'P',
+    goalChar:   'G',
     map: [
       ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
       ["W","F","F","W","F","F","F","W","F","W","W","F","W","F","F","W"],
       ["W","W","F","W","F","W","W","W","W","F","F","W","W","F","W","W"],
-      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","G","W"],
       ["W","F","F","F","W","F","W","F","F","W","W","F","F","F","F","W"],
       ["W","F","F","F","W","F","W","F","F","F","F","F","W","W","W","W"],
       ["W","W","W","W","W","F","W","W","W","W","W","W","W","F","F","W"],
@@ -82,8 +83,12 @@ function main() {
   function startGame() {
     document.body.appendChild(canvas);
     
+    // Temporal reseting to initial pos at start (Phase1) x,y
+    game.player.currentCol = 14;  
+    game.player.currentRow = 14;  
+
     game._defineControlKeys();
-    game._update();    
+    game._update();        
 
     // intervalID = window.setInterval(buildGameOver, 2000);
     window.addEventListener('keydown', escapeDEV);    // DEV MODE: Key to game over
