@@ -24,6 +24,13 @@ body {
   flex-direction: row;
 }
 
+#timer {
+	position: absolute;
+	float: right;
+	right: 60%;
+	top: 1%;
+}
+
 /* Buttons */
 
 .btn {  

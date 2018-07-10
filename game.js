@@ -1,15 +1,18 @@
-function Game(options) {
+function Game(options,buildGameOver) {
+  this.cbGameOver   = buildGameOver;
   this.ctx          = options.ctx;
   this.rows         = options.rows;
   this.cols         = options.cols;
   this.wallChar     = options.wallChar;     // Control character for walls
   this.floorChar    = options.floorChar;    // Control character for floor
   this.playerChar   = options.playerChar;   // Control character for player
-  this.goalChar     = options.goalChar;   // Control character for goal
-  this.map          = options.map;
+  this.goalChar     = options.goalChar;     // Control character for goal
+  this.map          = options.map;  
+  this.isEnd        = options.isEnd;
+  this.isWin        = options.isWin;
   this.player       = new Player({
-    currentRow: 14, // InitialPlayerPos
-    currentCol: 14, // InitialPlayerPos   
+    currentRow: undefined, // InitialPlayerPos
+    currentCol: undefined, // InitialPlayerPos   
   });    
 }
 
@@ -78,14 +81,8 @@ Game.prototype._checkCollisions = function() {
 Game.prototype._checkGoal = function() {
   if (this.map[this.player.currentCol][this.player.currentRow] === this.goalChar) {
     console.log('GOAL!!');
+    this.isEnd = true;
   }
-}
-
-Game.prototype._update = function() {
-  this._drawMap();
-  this._drawPlayer();
-  this._checkGoal();    
-  window.requestAnimationFrame(this._update.bind(this));
 }
 
 Game.prototype._defineControlKeys = function () {
@@ -114,4 +111,39 @@ Game.prototype._defineControlKeys = function () {
     }
 
   }.bind(this);
+}
+
+Game.prototype.countdownControl = function(countdownTimer, clock, countdownId) {
+  
+  document.body.appendChild(countdownTimer);
+  
+  // Start countdownTimer  
+  this.countdownId = setInterval(function() {
+    if (clock > 0){
+      clock = clock - 1;
+      document.getElementById('timer').innerText = clock;
+    }
+    else {
+      // Stop countdownTimer
+      clearInterval(countdownId);      
+      console.log('TIME OUT!!');
+      this.isEnd = true;                
+    }
+    
+  }.bind(this), 1000);  
+  
+}
+
+Game.prototype._update = function() {
+  if (this.isEnd === false){
+    this._drawMap();
+    this._drawPlayer();
+    this._checkGoal();    
+    window.requestAnimationFrame(this._update.bind(this));
+  }
+  else {
+    console.log('GAME OVER!');
+    this.isEnd = false;
+    this.cbGameOver();    
+  }
 }

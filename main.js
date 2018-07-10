@@ -28,8 +28,11 @@ function main() {
   restartButton.innerText = 'RESTART';
   restartButton.addEventListener('click', destroyGameOver);
 
-  // Timer
-  var intervalID;
+  // Timer 
+  var countdownTimer = document.createElement('div');
+  countdownTimer.setAttribute('id', 'timer');
+  countdownTimer.setAttribute('class', 'btn');  
+  var countdownId = 0;
 
   // Constructing the game  
   var ctx = canvas.getContext('2d');
@@ -41,15 +44,17 @@ function main() {
     wallChar:   'W',
     floorChar:  'F',
     playerChar: 'P',
-    goalChar:   'G',
+    goalChar:   'G',    
+    isEnd:      false,
+    isWin:      false,
     map: [
       ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
       ["W","F","F","W","F","F","F","W","F","W","W","F","W","F","F","W"],
       ["W","W","F","W","F","W","W","W","W","F","F","W","W","F","W","W"],
-      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","G","W"],
+      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
       ["W","F","F","F","W","F","W","F","F","W","W","F","F","F","F","W"],
       ["W","F","F","F","W","F","W","F","F","F","F","F","W","W","W","W"],
-      ["W","W","W","W","W","F","W","W","W","W","W","W","W","F","F","W"],
+      ["W","W","W","W","W","F","W","W","W","W","W","W","W","F","G","W"],
       ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
       ["W","F","F","F","F","F","F","F","F","F","F","F","F","W","W","W"],
       ["W","F","F","F","F","F","F","F","W","W","W","F","F","W","W","W"],
@@ -60,8 +65,10 @@ function main() {
       ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
       ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
     ],    
-  });
+  },buildGameOver);
   
+  
+  // Main menu screen functions
   function buildSplash() {    
     document.body.appendChild(mainMenu);
     mainMenu.appendChild(startButton);
@@ -69,41 +76,49 @@ function main() {
 
   function destroySplash() {        
      mainMenu.remove();
-     startGame();
+     buildGame();
   }
   
   // DEV MODE: Key to game over
   function escapeDEV(e){
     var keyCode = e.keyCode;
-    if(keyCode == 27){
+    if(keyCode == 27){            
       buildGameOver();
     }
   };
-  
-  function startGame() {
+
+  // Game loop
+  function buildGame() {
     document.body.appendChild(canvas);
     
-    // Temporal reseting to initial pos at start (Phase1) x,y
+    // Temporal reseting to initial pos at start (Phase1) x,y and timer
     game.player.currentCol = 14;  
-    game.player.currentRow = 14;  
+    game.player.currentRow = 14;
+    var clock = 6;  
 
     game._defineControlKeys();
-    game._update();        
-
-    // intervalID = window.setInterval(buildGameOver, 2000);
-    window.addEventListener('keydown', escapeDEV);    // DEV MODE: Key to game over
+    game.countdownControl(countdownTimer, clock, countdownId);
+    game._update();    
     
+    window.addEventListener('keydown', escapeDEV);    // DEV MODE: Key to game over    
   }
 
+  // Game over screen functions
   function buildGameOver() {
-    canvas.remove();    
+    canvas.remove();
+
+    // Removing and reseting all entire countdown
+    countdownTimer.remove();
+    clock = 0;    
+    clearInterval(countdownId);    
     document.body.appendChild(gameOver);
+
+    // Drawing restart button
     gameOver.appendChild(restartButton); 
   }
 
   function destroyGameOver() {
-    gameOver.remove();
-    // clearInterval(intervalID);
+    gameOver.remove();   
     window.removeEventListener('keydown', escapeDEV);  // DEV MODE: Key to game over
     buildSplash();
   }
