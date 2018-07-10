@@ -24,9 +24,21 @@ body {
   flex-direction: row;
 }
 
+#game-win {
+  background-image: url(../img/YouWin1.jpg);
+  background-size:cover;
+  background-repeat: no-repeat;
+  height: 600px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
 #timer {
 	position: absolute;
 	float: right;
+	font-size: 25px;
 	right: 60%;
 	top: 1%;
 }

@@ -1,19 +1,33 @@
-function Game(options,buildGameOver) {
-  this.cbGameOver   = buildGameOver;
-  this.ctx          = options.ctx;
-  this.rows         = options.rows;
-  this.cols         = options.cols;
-  this.wallChar     = options.wallChar;     // Control character for walls
-  this.floorChar    = options.floorChar;    // Control character for floor
-  this.playerChar   = options.playerChar;   // Control character for player
-  this.goalChar     = options.goalChar;     // Control character for goal
-  this.map          = options.map;  
-  this.isEnd        = options.isEnd;
-  this.isWin        = options.isWin;
-  this.player       = new Player({
-    currentRow: undefined, // InitialPlayerPos
-    currentCol: undefined, // InitialPlayerPos   
+function Game(options, buildGameOver, buildGameWin, countdownTimer) {
+  this.countdownTimer = countdownTimer;
+  this.countdownId    = 0;  
+  this.cbGameOver     = buildGameOver;
+  this.cbGameWin      = buildGameWin;  
+  this.ctx            = options.ctx;
+  this.rows           = options.rows;
+  this.cols           = options.cols;
+  this.wallChar       = options.wallChar;     // Control character for walls
+  this.floorChar      = options.floorChar;    // Control character for floor
+  this.playerChar     = options.playerChar;   // Control character for player
+  this.goalChar       = options.goalChar;     // Control character for goal
+  this.map            = options.map;  
+  this.isEnd          = options.isEnd;
+  this.isWin          = options.isWin;
+  this.player         = new Player({
+    currentRow: 14, // InitialPlayerPos
+    currentCol: 14, // InitialPlayerPos   
   });    
+}
+
+// Temporal reseting to initial pos at start (Phase1) x,y and timer
+var clock       = 11;
+Game.prototype._resetStatus = function() {  
+  clearInterval(this.countdownId);      
+  clock = 11;
+  this.isWin = false;
+  this.isEnd = false;
+  this.player.currentCol  = 14;  
+  this.player.currentRow  = 14;
 }
 
 // Drawing on canvas the map
@@ -81,7 +95,7 @@ Game.prototype._checkCollisions = function() {
 Game.prototype._checkGoal = function() {
   if (this.map[this.player.currentCol][this.player.currentRow] === this.goalChar) {
     console.log('GOAL!!');
-    this.isEnd = true;
+    this.isWin = true;
   }
 }
 
@@ -113,37 +127,49 @@ Game.prototype._defineControlKeys = function () {
   }.bind(this);
 }
 
-Game.prototype.countdownControl = function(countdownTimer, clock, countdownId) {
-  
+Game.prototype.countdownControl = function(countdownTimer) {
+
   document.body.appendChild(countdownTimer);
   
   // Start countdownTimer  
   this.countdownId = setInterval(function() {
-    if (clock > 0){
+    if (clock > 0 && this.isEnd === false && this.isWin === false) {
       clock = clock - 1;
       document.getElementById('timer').innerText = clock;
     }
     else {
       // Stop countdownTimer
-      clearInterval(countdownId);      
-      console.log('TIME OUT!!');
+      clearInterval(this.countdownId);      
+      console.log('TIME OUT!!');      
       this.isEnd = true;                
     }
     
-  }.bind(this), 1000);  
-  
+  }.bind(this), 1000);    
 }
 
 Game.prototype._update = function() {
-  if (this.isEnd === false){
+  if (this.isEnd === false && this.isWin === false) {
     this._drawMap();
     this._drawPlayer();
-    this._checkGoal();    
+    this._checkGoal();
+    if (this.isWin === true) {
+      console.log('YOU WIN!');      
+      this.countdownTimer.remove();
+      this.cbGameWin();
+    }        
     window.requestAnimationFrame(this._update.bind(this));
-  }
-  else {
-    console.log('GAME OVER!');
-    this.isEnd = false;
+  }  
+  if (this.isEnd === true && this.isWin === false) {
+    clearInterval(this.countdownId);      
+    console.log('GAME OVER!');    
+    this.countdownTimer.remove();
     this.cbGameOver();    
   }
+}
+
+Game.prototype.start = function() {
+  this._resetStatus();
+  this._defineControlKeys();
+  this.countdownControl(this.countdownTimer);  
+  this._update();
 }

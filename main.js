@@ -21,18 +21,22 @@ function main() {
   var gameOver = document.createElement('div');
   gameOver.setAttribute('id', 'game-over');
 
+  // Building Game Win
+  var gameWin = document.createElement('div');
+  gameWin.setAttribute('id', 'game-win');
+
   // Building reStart button
   var restartButton = document.createElement('button');
   restartButton.setAttribute('id', 'restartButton');
   restartButton.setAttribute('class', 'btn');
   restartButton.innerText = 'RESTART';
   restartButton.addEventListener('click', destroyGameOver);
+  restartButton.addEventListener('click', destroyGameWin);
 
   // Timer 
   var countdownTimer = document.createElement('div');
   countdownTimer.setAttribute('id', 'timer');
-  countdownTimer.setAttribute('class', 'btn');  
-  var countdownId = 0;
+  countdownTimer.setAttribute('class', 'btn');    
 
   // Constructing the game  
   var ctx = canvas.getContext('2d');
@@ -44,7 +48,7 @@ function main() {
     wallChar:   'W',
     floorChar:  'F',
     playerChar: 'P',
-    goalChar:   'G',    
+    goalChar:   'G',       
     isEnd:      false,
     isWin:      false,
     map: [
@@ -65,7 +69,7 @@ function main() {
       ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
       ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
     ],    
-  },buildGameOver);
+  },buildGameOver, buildGameWin, countdownTimer);
   
   
   // Main menu screen functions
@@ -90,38 +94,43 @@ function main() {
   // Game loop
   function buildGame() {
     document.body.appendChild(canvas);
-    
-    // Temporal reseting to initial pos at start (Phase1) x,y and timer
-    game.player.currentCol = 14;  
-    game.player.currentRow = 14;
-    var clock = 6;  
+    game.start();
 
-    game._defineControlKeys();
-    game.countdownControl(countdownTimer, clock, countdownId);
-    game._update();    
-    
-    window.addEventListener('keydown', escapeDEV);    // DEV MODE: Key to game over    
+    // DEV MODE: Key to game over
+    window.addEventListener('keydown', escapeDEV);        
   }
 
   // Game over screen functions
   function buildGameOver() {
-    canvas.remove();
-
-    // Removing and reseting all entire countdown
-    countdownTimer.remove();
-    clock = 0;    
-    clearInterval(countdownId);    
+    canvas.remove();        
     document.body.appendChild(gameOver);
-
-    // Drawing restart button
     gameOver.appendChild(restartButton); 
   }
 
   function destroyGameOver() {
-    gameOver.remove();   
-    window.removeEventListener('keydown', escapeDEV);  // DEV MODE: Key to game over
+    gameOver.remove();
+
+    // DEV MODE: Key to game over   
+    window.removeEventListener('keydown', escapeDEV);
+      
     buildSplash();
   }
+
+  // Game Win screen 
+  function buildGameWin() {
+    canvas.remove();        
+    document.body.appendChild(gameWin);
+    gameWin.appendChild(restartButton); 
+  }
+
+  function destroyGameWin() {
+    gameWin.remove();
+
+    // DEV MODE: Key to game over   
+    window.removeEventListener('keydown', escapeDEV);  
+    buildSplash();
+  }
+
   buildSplash();
 }
 
