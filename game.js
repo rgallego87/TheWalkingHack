@@ -1,6 +1,6 @@
 function Game(options, buildGameOver, buildGameWin, countdownTimer) {
   this.countdownTimer = countdownTimer;
-  this.countdownId    = 0;  
+  this.countdownId    = 0;    
   this.cbGameOver     = buildGameOver;
   this.cbGameWin      = buildGameWin;  
   this.ctx            = options.ctx;
@@ -22,7 +22,7 @@ function Game(options, buildGameOver, buildGameWin, countdownTimer) {
 // Temporal reseting to initial pos at start (Phase1) x,y and timer
 var clock       = 11;
 Game.prototype._resetStatus = function() {  
-  clearInterval(this.countdownId);      
+  clearInterval(this.countdownId);  
   clock = 11;
   this.isWin = false;
   this.isEnd = false;
@@ -135,7 +135,7 @@ Game.prototype.countdownControl = function(countdownTimer) {
   this.countdownId = setInterval(function() {
     if (clock > 0 && this.isEnd === false && this.isWin === false) {
       clock = clock - 1;
-      document.getElementById('timer').innerText = clock;
+      document.getElementById('timer').innerText = 'Time: ' + clock;
     }
     else {
       // Stop countdownTimer
@@ -170,6 +170,6 @@ Game.prototype._update = function() {
 Game.prototype.start = function() {
   this._resetStatus();
   this._defineControlKeys();
-  this.countdownControl(this.countdownTimer);  
   this._update();
+  this.countdownControl(this.countdownTimer);  
 }

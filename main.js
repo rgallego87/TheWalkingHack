@@ -16,6 +16,9 @@ function main() {
   canvas.setAttribute('id', 'main');
   canvas.setAttribute('width', 800);
   canvas.setAttribute('height', 800);
+  // Building canvas wrapper
+  var wrapper = document.createElement('div');
+  wrapper.setAttribute('id', 'canvas-wrapper');  
 
   // Building Game Over
   var gameOver = document.createElement('div');
@@ -33,17 +36,23 @@ function main() {
   restartButton.addEventListener('click', destroyGameOver);
   restartButton.addEventListener('click', destroyGameWin);
 
+  // Building buttons wrapper
+  var btnWrapper = document.createElement('div');
+  btnWrapper.setAttribute('class', 'btn-wrapper');
+  var btnWrapper2 = document.createElement('div');
+  btnWrapper2.setAttribute('class', 'btn-wrapper');  
+
   // Timer 
   var countdownTimer = document.createElement('div');
   countdownTimer.setAttribute('id', 'timer');
-  countdownTimer.setAttribute('class', 'btn');    
+  countdownTimer.setAttribute('class', 'timer-hud');    
 
   // Constructing the game  
   var ctx = canvas.getContext('2d');
 
   var game = new Game({
-    rows:       canvas.width / 50,
-    cols:       canvas.height / 50,    
+    rows:       canvas.height / 50,
+    cols:       canvas.width / 50,    
     ctx:        ctx,
     wallChar:   'W',
     floorChar:  'F',
@@ -71,11 +80,11 @@ function main() {
     ],    
   },buildGameOver, buildGameWin, countdownTimer);
   
-  
   // Main menu screen functions
   function buildSplash() {    
     document.body.appendChild(mainMenu);
-    mainMenu.appendChild(startButton);
+    mainMenu.appendChild(btnWrapper)
+    btnWrapper.appendChild(startButton);
   }
 
   function destroySplash() {        
@@ -84,16 +93,19 @@ function main() {
   }
   
   // DEV MODE: Key to game over
-  function escapeDEV(e){
+  function escapeDEV(e) {
     var keyCode = e.keyCode;
-    if(keyCode == 27){            
+    if (keyCode == 27) {            
+      game._resetStatus();
       buildGameOver();
     }
-  };
-
+  }
+  
   // Game loop
-  function buildGame() {
-    document.body.appendChild(canvas);
+  function buildGame() {    
+    document.body.appendChild(wrapper);
+    wrapper.appendChild(canvas);    
+    
     game.start();
 
     // DEV MODE: Key to game over
@@ -104,7 +116,8 @@ function main() {
   function buildGameOver() {
     canvas.remove();        
     document.body.appendChild(gameOver);
-    gameOver.appendChild(restartButton); 
+    gameOver.appendChild(btnWrapper2); 
+    btnWrapper2.appendChild(restartButton);
   }
 
   function destroyGameOver() {
@@ -112,7 +125,7 @@ function main() {
 
     // DEV MODE: Key to game over   
     window.removeEventListener('keydown', escapeDEV);
-      
+
     buildSplash();
   }
 
@@ -120,7 +133,8 @@ function main() {
   function buildGameWin() {
     canvas.remove();        
     document.body.appendChild(gameWin);
-    gameWin.appendChild(restartButton); 
+    gameWin.appendChild(btnWrapper2);
+    btnWrapper2.appendChild(restartButton); 
   }
 
   function destroyGameWin() {

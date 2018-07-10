@@ -2,48 +2,83 @@ body {
   overflow: hidden;
 }
 
+#canvas-wrapper {
+	margin: 0 auto;
+	width: 800px;		
+}
+
 #main-menu {
   background-image: url(../img/TWD_Splash1.jpg);
-  background-size:cover;
-  background-repeat: no-repeat;
-  height: 600px;
-  
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 600px;	
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: center;	
+
+	margin: 5% auto;
+	width: 60%;	
 }
 
 #game-over {
   background-image: url(../img/TWD_GameOver1.jpg);
-  background-size:cover;
-  background-repeat: no-repeat;
-  height: 600px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 600px;	
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: center;	
 
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
+	margin: 5% auto;
+	width: 60%;
 }
 
 #game-win {
   background-image: url(../img/YouWin1.jpg);
-  background-size:cover;
-  background-repeat: no-repeat;
-  height: 600px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 600px;	
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: center;	
 
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
+	margin: 5% auto;
+	width: 60%;
 }
 
 #timer {
+	border-top: 1px solid #96d1f8;
+	background: #65d6c1;
+	/* background: -webkit-gradient(linear, left top, left bottom, from(#3e8c9c), to(#65d6c1));
+	background: -webkit-linear-gradient(top, #3e8c9c, #65d6c1);
+	background: -moz-linear-gradient(top, #3e8c9c, #65d6c1);
+	background: -ms-linear-gradient(top, #3e8c9c, #65d6c1);
+	background: -o-linear-gradient(top, #3e8c9c, #65d6c1); */
+	padding: 6px 12px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	color: white;	
+	font-family: Helvetica, Arial, Sans-Serif;
+	text-decoration: none;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 25px;	
 	position: absolute;
-	float: right;
-	font-size: 25px;
-	right: 60%;
-	top: 1%;
+	top:1px;
+	right: 64%;
+	margin: 7px auto;	
+	width: 100px;
 }
 
 /* Buttons */
+
+.btn-wrapper {
+	margin-top: 55%
+}
 
 .btn {  
 	-moz-box-shadow:inset 0px 1px 0px 0px #cf866c;
@@ -68,11 +103,7 @@ body {
 	font-weight:bold;
 	padding:0.5em;
 	text-decoration:none;
-  text-shadow:0px 1px 0px #854629;
-  
-  
-  align-self: flex-end;  
-  margin-bottom: 100px;
+  text-shadow:0px 1px 0px #854629;  
 }
 .btn:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bc3315), color-stop(1, #d0451b));
