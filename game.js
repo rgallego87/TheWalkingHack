@@ -15,16 +15,32 @@ function Game(options, buildGameOver, buildGameWin, countdownTimer) {
   this.isEnd          = options.isEnd;
   this.isWin          = options.isWin;
   this.player         = new Player({
-    currentRow: 14, // InitialPlayerPos
-    currentCol: 14, // InitialPlayerPos   
+    currentRow: 14,   // InitialPlayerPos
+    currentCol: 14,   // InitialPlayerPos   
   });
   this.enemy          = new Enemy({
-    currentRow: 4,    // InitialEnemyPos
-    currentCol: 2,    // InitialEnemyPos
+    currentCol: 8,    // InitialEnemyPos
+    currentRow: 2,    // InitialEnemyPos
     direction: null,
   });
-  this.enemy.randomDirection();
+  // this.enemies          = []; 
+  // this._generateEnemies();
+  this.enemy.randomDirection(); 
   this.frameCounter   = 0;    
+}
+
+Game.prototype._generateEnemies = function() {
+  var numOfEnemies = 10;
+
+  for (var i = 0; i < numOfEnemies; i++) {
+    this.enemies[i] = new Enemy({
+      currentCol: 8,    // InitialEnemyPos
+      currentRow: 2,    // InitialEnemyPos
+      direction: null,
+    });
+    this.enemies[i].randomDirection();
+  }
+
 }
 
 // Temporal reseting to initial pos at start (Phase1) x,y and timer
@@ -36,7 +52,25 @@ Game.prototype._resetStatus = function() {
   this.isEnd                = false;
   this.player.currentCol    = 14;  
   this.player.currentRow    = 14;
-  this.enemy.currentCol     = 4;
+  this.map = [
+    ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
+    ["W","F","F","W","F","F","F","W","F","W","W","F","W","F","F","W"],
+    ["W","W","F","W","F","W","W","W","W","F","F","W","W","F","W","W"],
+    ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+    ["W","F","F","F","W","F","W","F","F","W","W","F","F","F","F","W"],
+    ["W","F","F","F","W","F","W","F","F","F","F","F","W","W","W","W"],
+    ["W","W","W","W","W","F","W","W","W","W","W","W","W","F","G","W"],
+    ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+    ["W","F","F","F","F","F","F","F","F","F","F","F","F","W","W","W"],
+    ["W","F","F","F","F","F","F","F","W","W","W","F","F","W","W","W"],
+    ["W","F","W","F","W","W","F","F","F","F","F","F","F","W","W","W"],
+    ["W","F","W","F","W","W","F","F","F","F","F","F","F","F","F","W"],
+    ["W","F","W","F","F","W","F","F","F","F","F","F","F","F","F","W"],
+    ["W","W","W","F","F","W","W","W","W","W","W","W","W","W","W","W"],
+    ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+    ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
+  ];
+  this.enemy.currentCol     = 8;
   this.enemy.currentRow     = 2;
 }
 
@@ -47,32 +81,30 @@ Game.prototype._drawMap = function () {
       
       if (this.map[colIndex][rowIndex] === this.wallChar) {
         this.ctx.fillStyle = 'red';
-        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 48, 48); // Remove 2px margin when using sprites
+        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 50, 50); // Remove 2px margin when using sprites
       }
       else if (this.map[colIndex][rowIndex] === this.floorChar) {
         this.ctx.fillStyle = 'blue';
-        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 48, 48); // Remove 2px margin when using sprites
+        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 50, 50); // Remove 2px margin when using sprites
       }
       else if (this.map[colIndex][rowIndex] === this.goalChar) {
         this.ctx.fillStyle = 'yellow';
-        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 48, 48); // Remove 2px margin when using sprites  
+        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 50, 50); // Remove 2px margin when using sprites  
       }
     }
   }
 }
 
 // Drawing player on map
-Game.prototype._drawPlayer = function() {
-  console.log(this.player);
+Game.prototype._drawPlayer = function() {  
   this.ctx.fillStyle = 'green';
-  this.ctx.fillRect(this.player.currentRow * 50, this.player.currentCol * 50, 48, 48); // Remove 2px margin when using sprites  
+  this.ctx.fillRect(this.player.currentRow * 50, this.player.currentCol * 50, 50, 50); // Remove 2px margin when using sprites  
 }
 
 // Drawing enemies on map
-Game.prototype._drawEnemy = function() {
-  console.log(this.enemy);
+Game.prototype._drawEnemy = function() {  
   this.ctx.fillStyle = '#000000';
-  this.ctx.fillRect(this.enemy.currentRow * 50, this.enemy.currentCol * 50, 48, 48); // Remove 2px margin when using sprites
+  this.ctx.fillRect(this.enemy.currentRow * 50, this.enemy.currentCol * 50, 50, 50); // Remove 2px margin when using sprites
 }
 
 Game.prototype._checkCollisions = function() {
@@ -81,21 +113,45 @@ Game.prototype._checkCollisions = function() {
     switch (this.player.direction) {
       case 'up': // UP
         if (this.map[this.player.currentCol - 1][this.player.currentRow] !== this.wallChar) {
+          // Updating control player chars on main map matrix
+          if (this.map[this.player.currentCol - 1][this.player.currentRow] !== this.goalChar) {
+            this.map[this.player.currentCol - 1][this.player.currentRow]  = this.playerChar;
+            this.map[this.player.currentCol][this.player.currentRow]      = this.floorChar;
+          }  
+          // then moves
           this.player.goUp();
         }  
       break;
       case 'down': // DOWN
         if (this.map[this.player.currentCol + 1][this.player.currentRow] !== this.wallChar) {
+          // Updating control player chars on main map matrix
+          if (this.map[this.player.currentCol + 1][this.player.currentRow] !== this.goalChar) {
+            this.map[this.player.currentCol + 1][this.player.currentRow] = this.playerChar;
+            this.map[this.player.currentCol][this.player.currentRow]     = this.floorChar;
+          }  
+          // then moves
           this.player.goDown();
         }  
       break;
       case 'left': // LEFT
         if (this.map[this.player.currentCol][this.player.currentRow - 1] !== this.wallChar) {
+          // Updating control player chars on main map matrix
+          if (this.map[this.player.currentCol][this.player.currentRow - 1] !== this.goalChar) {
+            this.map[this.player.currentCol][this.player.currentRow - 1]  = this.playerChar;
+            this.map[this.player.currentCol][this.player.currentRow]      = this.floorChar;
+          }  
+          // then moves
           this.player.goLeft();
         }  
       break;
       case 'right': // RIGHT
         if (this.map[this.player.currentCol][this.player.currentRow + 1] !== this.wallChar) {
+          // Updating control player chars on main map matrix
+          if (this.map[this.player.currentCol][this.player.currentRow + 1] !== this.goalChar) {
+            this.map[this.player.currentCol][this.player.currentRow + 1] = this.playerChar;
+            this.map[this.player.currentCol][this.player.currentRow]     = this.floorChar;
+          }  
+          // then moves
           this.player.goRight();    
         }  
       break;
@@ -108,28 +164,59 @@ Game.prototype._checkEnemyCollisions = function() {
   switch (this.enemy.direction) {
     case 'up': // UP
     if (this.map[this.enemy.currentCol - 1][this.enemy.currentRow] !== this.wallChar) {
+      // Updating control player chars on main map matrix
+      if (this.map[this.enemy.currentCol - 1][this.enemy.currentRow] !== this.goalChar) {
+        if (this.map[this.enemy.currentCol - 1][this.enemy.currentRow] !== this.playerChar) {
+          this.map[this.enemy.currentCol - 1][this.enemy.currentRow]  = this.enemyChar;
+          this.map[this.enemy.currentCol][this.enemy.currentRow]      = this.floorChar;
+        } else this.isEnd = true;
+      }
+      // then moves
       this.enemy.move();
     } 
       break;
     case 'down': // DOWN
     if (this.map[this.enemy.currentCol + 1][this.enemy.currentRow] !== this.wallChar) {
+      // Updating control player chars on main map matrix
+      if (this.map[this.enemy.currentCol + 1][this.enemy.currentRow] !== this.goalChar) {
+        if (this.map[this.enemy.currentCol + 1][this.enemy.currentRow] !== this.playerChar) {
+          this.map[this.enemy.currentCol + 1][this.enemy.currentRow]  = this.enemyChar;
+          this.map[this.enemy.currentCol][this.enemy.currentRow]      = this.floorChar;
+        } else this.isEnd = true;
+      }
+      // then moves
       this.enemy.move();
     }  
       break;
     case 'left': // LEFT
     if (this.map[this.enemy.currentCol][this.enemy.currentRow - 1] !== this.wallChar) {
+      // Updating control player chars on main map matrix
+      if (this.map[this.enemy.currentCol][this.enemy.currentRow - 1] !== this.goalChar) {
+        if (this.map[this.enemy.currentCol][this.enemy.currentRow - 1] !== this.playerChar) {
+          this.map[this.enemy.currentCol][this.enemy.currentRow - 1]  = this.enemyChar;
+          this.map[this.enemy.currentCol][this.enemy.currentRow]      = this.floorChar;
+        } else this.isEnd = true;
+      }
+      // then moves
       this.enemy.move();
     }  
       break;
     case 'right': // RIGHT
     if (this.map[this.enemy.currentCol][this.enemy.currentRow + 1] !== this.wallChar) {
+      // Updating control player chars on main map matrix
+      if (this.map[this.enemy.currentCol][this.enemy.currentRow + 1] !== this.goalChar) {
+        if (this.map[this.enemy.currentCol][this.enemy.currentRow + 1] !== this.playerChar) {
+          this.map[this.enemy.currentCol][this.enemy.currentRow + 1]  = this.enemyChar;
+          this.map[this.enemy.currentCol][this.enemy.currentRow]      = this.floorChar;
+        } else this.isEnd = true;
+      }
+      // then moves
       this.enemy.move();
     }  
       break;
   }
-  this.enemy.randomDirection();
+  this.enemy.randomDirection();  
 }
-
 
 Game.prototype._checkGoal = function() {
   if (this.map[this.player.currentCol][this.player.currentRow] === this.goalChar) {
@@ -215,9 +302,6 @@ Game.prototype._update = function() {
 Game.prototype.start = function() {
   this._resetStatus();
   this._defineControlKeys();
+  this.countdownControl(this.countdownTimer);   
   this._update();    
-  this.countdownControl(this.countdownTimer);
-
-  //setTimeout(this.countdownControl(this.countdownTimer), 5000);  
-  // clearTimeout(timeout);  
 }

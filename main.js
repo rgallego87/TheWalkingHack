@@ -60,25 +60,7 @@ function main() {
     goalChar:   'G',
     enemyChar:  'E',       
     isEnd:      false,
-    isWin:      false,
-    map: [
-      ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
-      ["W","F","F","W","F","F","F","W","F","W","W","F","W","F","F","W"],
-      ["W","W","F","W","F","W","W","W","W","F","F","W","W","F","W","W"],
-      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-      ["W","F","F","F","W","F","W","F","F","W","W","F","F","F","F","W"],
-      ["W","F","F","F","W","F","W","F","F","F","F","F","W","W","W","W"],
-      ["W","W","W","W","W","F","W","W","W","W","W","W","W","F","G","W"],
-      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-      ["W","F","F","F","F","F","F","F","F","F","F","F","F","W","W","W"],
-      ["W","F","F","F","F","F","F","F","W","W","W","F","F","W","W","W"],
-      ["W","F","W","F","W","W","F","F","F","F","F","F","F","W","W","W"],
-      ["W","F","W","F","W","W","F","F","F","F","F","F","F","F","F","W"],
-      ["W","F","W","F","F","W","F","F","F","F","F","F","F","F","F","W"],
-      ["W","W","W","F","F","W","W","W","W","W","W","W","W","W","W","W"],
-      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-      ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
-    ],    
+    isWin:      false,        
   },buildGameOver, buildGameWin, countdownTimer);
   
   // Main menu screen functions
