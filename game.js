@@ -32,6 +32,7 @@ Game.prototype.generateEnemies = function() {
       currentRow: 2,    // InitialEnemyPos
       direction: null
     }));
+    console.log(this.enemies.length,' ENEMY SPAWNED');
     if (this.enemies.length === this.numOfEnemies) {
       clearInterval(this.intervalGenerateEnemies);    
     }
@@ -74,6 +75,41 @@ Game.prototype._resetStatus = function() {
   }
 }
 
+// Temporal defining sprites
+// wallSprite.onload = _renderMap; 
+var wallSprite = new Image(50, 50);   
+wallSprite.src = 'img/wall1.png';
+
+var floorSprite = new Image(50, 50);    
+floorSprite.src = 'img/floor1.png';
+
+var goalSprite = new Image(50, 50);   
+goalSprite.src = 'img/door1.png';
+
+var playerSprite = new Image(50, 50);   
+playerSprite.src = 'img/survivor1.png';
+
+var enemySprite = new Image(50, 50);   
+enemySprite.src = 'img/zombi1.png';
+
+// Render on canvas the map with Sprites
+Game.prototype._renderMap = function () {
+  for (var colIndex = 0; colIndex < this.cols; colIndex++) {
+    for (var rowIndex = 0; rowIndex < this.rows; rowIndex++) {
+      
+      if (this.map[colIndex][rowIndex] === this.wallChar) {
+        this.ctx.drawImage(wallSprite, rowIndex * 50, colIndex * 50, 50, 50);        
+      }
+      else if (this.map[colIndex][rowIndex] === this.floorChar) {
+        this.ctx.drawImage(floorSprite, rowIndex * 50, colIndex * 50, 50, 50);        
+      }
+      else if (this.map[colIndex][rowIndex] === this.goalChar) {
+        this.ctx.drawImage(goalSprite, rowIndex * 50, colIndex * 50, 50, 50);        
+      }
+    }
+  }
+}
+
 // Drawing on canvas the map
 Game.prototype._drawMap = function () {
   for (var colIndex = 0; colIndex < this.cols; colIndex++) {
@@ -81,30 +117,40 @@ Game.prototype._drawMap = function () {
       
       if (this.map[colIndex][rowIndex] === this.wallChar) {
         this.ctx.fillStyle = 'red';
-        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 50, 50); // Remove 2px margin when using sprites
+        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 50, 50); 
       }
       else if (this.map[colIndex][rowIndex] === this.floorChar) {
         this.ctx.fillStyle = 'blue';
-        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 50, 50); // Remove 2px margin when using sprites
+        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 50, 50); 
       }
       else if (this.map[colIndex][rowIndex] === this.goalChar) {
         this.ctx.fillStyle = 'yellow';
-        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 50, 50); // Remove 2px margin when using sprites  
+        this.ctx.fillRect(rowIndex * 50, colIndex * 50, 50, 50);   
       }
     }
   }
 }
 
+// Render player on map
+Game.prototype._renderPlayer = function() {  
+  this.ctx.drawImage(playerSprite, this.player.currentRow * 50, this.player.currentCol * 50, 50, 50);
+}
+
 // Drawing player on map
 Game.prototype._drawPlayer = function() {  
   this.ctx.fillStyle = 'green';
-  this.ctx.fillRect(this.player.currentRow * 50, this.player.currentCol * 50, 50, 50); // Remove 2px margin when using sprites  
+  this.ctx.fillRect(this.player.currentRow * 50, this.player.currentCol * 50, 50, 50);   
+}
+
+// Render enemies on map
+Game.prototype._renderEnemy = function(enemy) {    
+  this.ctx.drawImage(enemySprite, enemy.currentRow * 50, enemy.currentCol * 50, 50, 50);  
 }
 
 // Drawing enemies on map
 Game.prototype._drawEnemy = function(enemy) {    
   this.ctx.fillStyle = '#000000';
-  this.ctx.fillRect(enemy.currentRow * 50, enemy.currentCol * 50, 50, 50); // Remove 2px margin when using sprites  
+  this.ctx.fillRect(enemy.currentRow * 50, enemy.currentCol * 50, 50, 50);  
 }
 
 Game.prototype._checkCollisions = function() {
@@ -218,31 +264,36 @@ Game.prototype.countdownControl = function() {
 
 Game.prototype._update = function() {
   if (this.isEnd === false && this.isWin === false) {
-    this.frameCounter++;    
-    this._drawMap();
-    this._drawPlayer();
+    this.frameCounter++;        
+    this._renderMap();    
+    this._renderPlayer();
     var i = 0;
     while(i < this.enemies.length) {
-      this._drawEnemy(this.enemies[i]);            
+      
+      this._renderEnemy(this.enemies[i]);            
       if (this.frameCounter % 20 === 0) {  
         this._checkEnemyCollisions(this.enemies[i]);                        
       }
-      i++
+      i++      
     }        
         
     window.requestAnimationFrame(this._update.bind(this));
   }
-  else if (this.isWin === true) {
+  if (this.isWin === true) {
     clearInterval(this.countdownId);
+    clearInterval(this.intervalGenerateEnemies);
     console.log('YOU WIN!');            
-    this.cbGameWin();    
+    this.cbGameWin();
+    return    
   }  
-  else if (this.isEnd === true && this.isWin === false) {
-    clearInterval(this.countdownId);      
+  if (this.isEnd === true && this.isWin === false) {
+    clearInterval(this.countdownId);
+    clearInterval(this.intervalGenerateEnemies);      
     console.log('GAME OVER!');        
     this.cbGameOver();    
+    return
   }
-  else if (this.clock <= 0) {
+  if (this.clock <= 0) {
     // Stop countdownTimer
     console.log('TIME OUT!!');      
     this.isEnd = true;                          
