@@ -39,7 +39,6 @@ Game.prototype.generateEnemies = function() {
   
 }
 
-
 // Temporal reseting to initial pos at start (Phase1) x,y and timer
 Game.prototype._resetStatus = function() {  
   clearInterval(this.countdownId);  
@@ -110,120 +109,72 @@ Game.prototype._drawEnemy = function(enemy) {
 
 Game.prototype._checkCollisions = function() {
 
-    // Checking collisions with control characters and if not update to new player pos
-    switch (this.player.direction) {
-      case 'up': // UP
-        if (this.map[this.player.currentCol - 1][this.player.currentRow] !== this.wallChar) {
-          // Updating control player chars on main map matrix
-          if (this.map[this.player.currentCol - 1][this.player.currentRow] !== this.goalChar) {
-            this.map[this.player.currentCol - 1][this.player.currentRow]  = this.playerChar;
-            this.map[this.player.currentCol][this.player.currentRow]      = this.floorChar;
-          }  
-          // then moves
-          this.player.goUp();
-        }  
-      break;
-      case 'down': // DOWN
-        if (this.map[this.player.currentCol + 1][this.player.currentRow] !== this.wallChar) {
-          // Updating control player chars on main map matrix
-          if (this.map[this.player.currentCol + 1][this.player.currentRow] !== this.goalChar) {
-            this.map[this.player.currentCol + 1][this.player.currentRow] = this.playerChar;
-            this.map[this.player.currentCol][this.player.currentRow]     = this.floorChar;
-          }  
-          // then moves
-          this.player.goDown();
-        }  
-      break;
-      case 'left': // LEFT
-        if (this.map[this.player.currentCol][this.player.currentRow - 1] !== this.wallChar) {
-          // Updating control player chars on main map matrix
-          if (this.map[this.player.currentCol][this.player.currentRow - 1] !== this.goalChar) {
-            this.map[this.player.currentCol][this.player.currentRow - 1]  = this.playerChar;
-            this.map[this.player.currentCol][this.player.currentRow]      = this.floorChar;
-          }  
-          // then moves
-          this.player.goLeft();
-        }  
-      break;
-      case 'right': // RIGHT
-        if (this.map[this.player.currentCol][this.player.currentRow + 1] !== this.wallChar) {
-          // Updating control player chars on main map matrix
-          if (this.map[this.player.currentCol][this.player.currentRow + 1] !== this.goalChar) {
-            this.map[this.player.currentCol][this.player.currentRow + 1] = this.playerChar;
-            this.map[this.player.currentCol][this.player.currentRow]     = this.floorChar;
-          }  
-          // then moves
-          this.player.goRight();    
-        }  
-      break;
-    }
+  var player = this.player;
+  var x = player.currentCol;
+  var y = player.currentRow;
+
+  // Update x,y depending on the direction
+  switch (player.direction) {
+    case 'up':
+    x--;
+    break;
+    case 'down':
+    x++;
+    break;
+    case 'left':
+    y--;
+    break;
+    case 'right':
+    y++;
+    break;
+  };
+
+  if (this.map[x][y] === this.enemyChar) {
+    this.isEnd = true;
+    player._updatePosition();    
+  } else if (this.map[x][y] === this.goalChar) {
+    this.isWin = true;
+    player._updatePosition();
+  }  
+  else if (this.map[x][y] !== this.wallChar) {
+    this.map[x][y]  = this.playerChar;
+    this.map[player.currentCol][player.currentRow]  = this.floorChar;
+    player._updatePosition();    
+  } 
+
 }
 
 Game.prototype._checkEnemyCollisions = function(enemy) {
 
-  // Checking collisions with control characters and if not update to new enemy pos
+  var x = enemy.currentCol;
+  var y = enemy.currentRow;
+
+  // Update x,y depending on the direction
   switch (enemy.direction) {
-    case 'up': // UP
-    if (this.map[enemy.currentCol - 1][enemy.currentRow] !== this.wallChar) {
-      // Updating control player chars on main map matrix
-      if (this.map[enemy.currentCol - 1][enemy.currentRow] !== this.goalChar) {
-        if (this.map[enemy.currentCol - 1][enemy.currentRow] !== this.playerChar) {
-          this.map[enemy.currentCol - 1][enemy.currentRow]  = this.enemyChar;
-          this.map[enemy.currentCol][enemy.currentRow]      = this.floorChar;
-        } else this.isEnd = true;
-      }
-      // then moves
-      enemy.move();
-    } 
-      break;
-    case 'down': // DOWN
-    if (this.map[enemy.currentCol + 1][enemy.currentRow] !== this.wallChar) {
-      // Updating control player chars on main map matrix
-      if (this.map[enemy.currentCol + 1][enemy.currentRow] !== this.goalChar) {
-        if (this.map[enemy.currentCol + 1][enemy.currentRow] !== this.playerChar) {
-          this.map[enemy.currentCol + 1][enemy.currentRow]  = this.enemyChar;
-          this.map[enemy.currentCol][enemy.currentRow]      = this.floorChar;
-        } else this.isEnd = true;
-      }
-      // then moves
-      enemy.move();
-    }  
-      break;
-    case 'left': // LEFT
-    if (this.map[enemy.currentCol][enemy.currentRow - 1] !== this.wallChar) {
-      // Updating control player chars on main map matrix
-      if (this.map[enemy.currentCol][enemy.currentRow - 1] !== this.goalChar) {
-        if (this.map[enemy.currentCol][enemy.currentRow - 1] !== this.playerChar) {
-          this.map[enemy.currentCol][enemy.currentRow - 1]  = this.enemyChar;
-          this.map[enemy.currentCol][enemy.currentRow]      = this.floorChar;
-        } else this.isEnd = true;
-      }
-      // then moves
-      enemy.move();
-    }  
-      break;
-    case 'right': // RIGHT
-    if (this.map[enemy.currentCol][enemy.currentRow + 1] !== this.wallChar) {
-      // Updating control player chars on main map matrix
-      if (this.map[enemy.currentCol][enemy.currentRow + 1] !== this.goalChar) {
-        if (this.map[enemy.currentCol][enemy.currentRow + 1] !== this.playerChar) {
-          this.map[enemy.currentCol][enemy.currentRow + 1]  = this.enemyChar;
-          this.map[enemy.currentCol][enemy.currentRow]      = this.floorChar;
-        } else this.isEnd = true;
-      }
-      // then moves
-      enemy.move();
-    }  
-      break;
+    case 'up':
+    x--;
+    break;
+    case 'down':
+    x++;
+    break;
+    case 'left':
+    y--;
+    break;
+    case 'right':
+    y++;
+    break;
+  };
+
+  if (this.map[x][y] === this.playerChar) {
+    this.isEnd = true;
+    enemy.move();
+  }
+  else if (this.map[x][y] !== this.wallChar && this.map[x][y] !== this.goalChar) {
+    this.map[x][y]  = this.enemyChar;
+    this.map[enemy.currentCol][enemy.currentRow]  = this.floorChar;
+    enemy.move();
   }
   enemy.randomDirection();  
-}
-
-Game.prototype._checkGoal = function() {
-  if (this.map[this.player.currentCol][this.player.currentRow] === this.goalChar) {
-    console.log('GOAL!!');
-    this.isWin = true;
-  }
 }
 
 Game.prototype._defineControlKeys = function () {
@@ -258,24 +209,16 @@ Game.prototype.countdownControl = function() {
 
   // Start countdownTimer  
   this.countdownId = setInterval(function() {
-    if (this.clock > 0 && this.isEnd === false && this.isWin === false) {
+    if (this.clock > 0) {
       this.clock--;
       document.getElementById('timer').innerText = 'Time: ' + this.clock;
-    }
-    else {
-      // Stop countdownTimer
-      console.log('TIME OUT!!');      
-      this.isEnd = true;                
-      clearInterval(this.countdownId);      
-    }
-    
+    }    
   }.bind(this), 1000);    
 }
 
 Game.prototype._update = function() {
   if (this.isEnd === false && this.isWin === false) {
-    this.frameCounter++;
-    this.enemyCounter++;
+    this.frameCounter++;    
     this._drawMap();
     this._drawPlayer();
     var i = 0;
@@ -285,26 +228,31 @@ Game.prototype._update = function() {
         this._checkEnemyCollisions(this.enemies[i]);                        
       }
       i++
-    }    
-    this._checkGoal();
-    if (this.isWin === true) {
-      clearInterval(this.countdownId);
-      console.log('YOU WIN!');            
-      this.cbGameWin();
     }        
+        
     window.requestAnimationFrame(this._update.bind(this));
+  }
+  else if (this.isWin === true) {
+    clearInterval(this.countdownId);
+    console.log('YOU WIN!');            
+    this.cbGameWin();    
   }  
-  if (this.isEnd === true && this.isWin === false) {
+  else if (this.isEnd === true && this.isWin === false) {
     clearInterval(this.countdownId);      
     console.log('GAME OVER!');        
     this.cbGameOver();    
+  }
+  else if (this.clock <= 0) {
+    // Stop countdownTimer
+    console.log('TIME OUT!!');      
+    this.isEnd = true;                          
   }
 }
 
 Game.prototype.start = function() {
   this._resetStatus();
   this.generateEnemies();
-  this._defineControlKeys();
   this.countdownControl();   
+  this._defineControlKeys();
   this._update();    
 }
