@@ -57,7 +57,8 @@ function main() {
     wallChar:   'W',
     floorChar:  'F',
     playerChar: 'P',
-    goalChar:   'G',       
+    goalChar:   'G',
+    enemyChar:  'E',       
     isEnd:      false,
     isWin:      false,
     map: [

@@ -5,22 +5,22 @@ function Player(position) {
 }
 
 Player.prototype.goUp = function() {  
-    // this.direction = 'up';
+    this.direction = 'up';
     this._updatePosition();  
 }
 
 Player.prototype.goDown = function() {  
-    // this.direction = 'down';
+    this.direction = 'down';
     this._updatePosition();  
 };
 
 Player.prototype.goLeft = function() {
-    // this.direction = 'left';
+    this.direction = 'left';
     this._updatePosition();  
 };
 
 Player.prototype.goRight = function() {  
-    // this.direction = 'right';
+    this.direction = 'right';
     this._updatePosition();  
 };
 
