@@ -61,7 +61,7 @@ function main() {
     enemyChar:  'E',       
     isEnd:      false,
     isWin:      false,        
-  },buildGameOver, buildGameWin, countdownTimer);
+  },buildGameOver, buildGameWin);
   
   // Main menu screen functions
   function buildSplash() {    
@@ -73,58 +73,42 @@ function main() {
   function destroySplash() {        
      mainMenu.remove();
      buildGame();
-  }
-  
-  // DEV MODE: Key to game over
-  function escapeDEV(e) {
-    var keyCode = e.keyCode;
-    if (keyCode == 27) {            
-      game._resetStatus();
-      buildGameOver();
-    }
-  }
+  }  
   
   // Game loop
   function buildGame() {    
     document.body.appendChild(wrapper);
-    wrapper.appendChild(canvas);    
+    wrapper.appendChild(canvas);
+    document.body.appendChild(countdownTimer);    
     
-    game.start();
-
-    // DEV MODE: Key to game over
-    window.addEventListener('keydown', escapeDEV);        
+    game.start();    
   }
 
   // Game over screen functions
   function buildGameOver() {
-    canvas.remove();        
+    canvas.remove();
+    countdownTimer.remove();        
     document.body.appendChild(gameOver);
     gameOver.appendChild(btnWrapper2); 
     btnWrapper2.appendChild(restartButton);
   }
 
   function destroyGameOver() {
-    gameOver.remove();
-
-    // DEV MODE: Key to game over   
-    window.removeEventListener('keydown', escapeDEV);
-
+    gameOver.remove();   
     buildSplash();
   }
 
   // Game Win screen 
   function buildGameWin() {
-    canvas.remove();        
+    canvas.remove();
+    countdownTimer.remove();        
     document.body.appendChild(gameWin);
     gameWin.appendChild(btnWrapper2);
     btnWrapper2.appendChild(restartButton); 
   }
 
   function destroyGameWin() {
-    gameWin.remove();
-
-    // DEV MODE: Key to game over   
-    window.removeEventListener('keydown', escapeDEV);  
+    gameWin.remove();    
     buildSplash();
   }
 

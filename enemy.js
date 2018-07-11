@@ -1,7 +1,8 @@
 function Enemy(position) {
   this.currentRow   = position.currentRow;
   this.currentCol   = position.currentCol;
-  this.direction    = position.direction; 
+  this.direction    = position.direction;
+  this.randomDirection(); 
 }
 
 Enemy.prototype.move = function() {
