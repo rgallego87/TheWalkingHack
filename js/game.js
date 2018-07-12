@@ -17,22 +17,22 @@ function Game(options, buildGameOver, buildGameWin) {
     currentRow: 14,   // InitialPlayerPos
     currentCol: 14,   // InitialPlayerPos   
   });  
-  this.numOfEnemies   = 10;  
+  this.numOfEnemies   = 20;  
   this.enemies        = [];
   this.intervalGenerateEnemies = undefined;     
   this.frameCounter   = 0;
-  this.clock          = 11;
+  this.clock          = 21;
   this.deathSnd       = new Sound('snd/playerDeath.mp3');    
   this.gameoverSnd    = new Sound('snd/GameOver.mp3');
   this.weWonSnd       = new Sound('snd/weWON.mp3');
 }
 
-Game.prototype.generateEnemies = function() {
+Game.prototype.generateEnemies = function(x,y) {
   
   this.intervalGenerateEnemies = setInterval(function() {
     this.enemies.push(new Enemy({
-      currentCol: 8,    // InitialEnemyPos
-      currentRow: 2,    // InitialEnemyPos
+      currentCol: x,    // InitialEnemyPos
+      currentRow: y,    // InitialEnemyPos
       direction: null
     }));
     console.log(this.enemies.length,' ENEMY SPAWNED');
@@ -47,34 +47,34 @@ Game.prototype.generateEnemies = function() {
 Game.prototype._resetStatus = function() {  
   clearInterval(this.countdownId);  
   clearInterval(this.intervalGenerateEnemies);
-  this.clock = 11;
+  this.clock = 21;
   this.isWin                = false;
   this.isEnd                = false;
   this.player.currentCol    = 14;  
-  this.player.currentRow    = 14;
+  this.player.currentRow    = 8;
   this.enemies              = [];
   this.map = [
     ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
-    ["W","F","F","W","F","F","F","W","F","W","W","F","W","F","F","W"],
-    ["W","W","F","W","F","W","W","W","W","F","F","W","W","F","W","W"],
-    ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-    ["W","F","F","F","W","F","W","F","F","W","W","F","F","F","F","W"],
-    ["W","F","F","F","W","F","W","F","F","F","F","F","W","W","W","W"],
-    ["W","W","W","W","W","F","W","W","W","W","W","W","W","F","G","W"],
-    ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
-    ["W","F","F","F","F","F","F","F","F","F","F","F","F","W","W","W"],
-    ["W","F","F","F","F","F","F","F","W","W","W","F","F","W","W","W"],
-    ["W","F","W","F","W","W","F","F","F","F","F","F","F","W","W","W"],
-    ["W","F","W","F","W","W","F","F","F","F","F","F","F","F","F","W"],
-    ["W","F","W","F","F","W","F","F","F","F","F","F","F","F","F","W"],
-    ["W","W","W","F","F","W","W","W","W","W","W","W","W","W","W","W"],
+    ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","G","W"],
+    ["W","F","F","F","F","W","F","W","W","W","W","W","W","W","F","W"],
+    ["W","F","W","W","F","W","F","W","F","W","F","F","F","F","F","W"],
+    ["W","F","W","F","F","W","F","W","F","W","F","F","F","F","F","W"],
+    ["W","F","W","F","W","W","F","W","F","F","F","F","F","F","F","W"],
+    ["W","F","W","F","F","F","F","F","F","W","F","F","W","W","W","W"],
+    ["W","F","W","W","W","W","W","W","F","W","F","F","F","F","F","W"],
+    ["W","F","F","F","F","F","F","F","F","W","W","W","W","W","F","W"],
+    ["W","F","W","F","F","F","F","F","F","F","F","W","F","F","F","W"],
+    ["W","F","W","F","W","W","W","W","W","W","F","W","F","W","F","W"],
+    ["W","F","W","F","W","F","F","F","F","F","F","W","F","W","W","W"],
+    ["W","F","W","F","W","F","W","W","W","W","F","W","F","F","F","W"],
+    ["W","F","W","F","W","F","W","F","F","W","F","W","W","W","F","W"],
     ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
     ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
   ];
   
   for (var i = 0; i < this.enemies.length; i++) {
-    this.enemies[i].currentCol     = 8;
-    this.enemies[i].currentRow     = 2;
+    this.enemies[i].currentCol     = 1;
+    this.enemies[i].currentRow     = 1;
   }
 }
 
@@ -106,14 +106,6 @@ var enemySprite_up = new Image(50, 50);
 enemySprite_up.src = 'img/zombi1_up.png';
 var enemySprite_down = new Image(50, 50);   
 enemySprite_down.src = 'img/zombi1_down.png';
-
-// Game.prototype.rotateSprite = function(ctx, x, y, sprite, angle) {
-//   ctx.save();
-//   // ctx.translate(x + ctx.width / 2, y + ctx.height / 2);
-//   ctx.rotate(angle * Math.PI / 180);
-//   ctx.drawImage(sprite, x, y, 50, 50);
-//   ctx.restore();
-// }
 
 // Render on canvas the map with Sprites
 Game.prototype._renderMap = function () {
@@ -323,7 +315,7 @@ Game.prototype._update = function() {
     while(i < this.enemies.length) {
       
       this._renderEnemy(this.enemies[i]);            
-      if (this.frameCounter % 20 === 0) {  
+      if (this.frameCounter % 40 === 0) {  
         this._checkEnemyCollisions(this.enemies[i]);                        
       }
       i++      
@@ -336,8 +328,7 @@ Game.prototype._update = function() {
     clearInterval(this.intervalGenerateEnemies);
     console.log('YOU WIN!');
     this.weWonSnd.play();            
-    this.cbGameWin();
-    
+    this.cbGameWin();    
     return    
   }  
   if (this.isEnd === true && this.isWin === false) {
@@ -359,7 +350,8 @@ Game.prototype._update = function() {
 
 Game.prototype.start = function() {
   this._resetStatus();
-  this.generateEnemies();
+  this.generateEnemies(1,1);
+  this.generateEnemies(3,10);    
   this.countdownControl();   
   this._defineControlKeys();
   this._update();    
