@@ -82,14 +82,38 @@ Game.prototype._resetStatus = function() {
 // wallSprite.onload = _renderMap; 
 var wallSprite = new Image(50, 50);   
 wallSprite.src = 'img/wall1.png';
+
 var floorSprite = new Image(50, 50);    
 floorSprite.src = 'img/floor1.png';
+
 var goalSprite = new Image(50, 50);   
 goalSprite.src = 'img/door1.png';
-var playerSprite = new Image(50, 50);   
-playerSprite.src = 'img/survivor1.png';
-var enemySprite = new Image(50, 50);   
-enemySprite.src = 'img/zombi1.png';
+
+var playerSprite_left = new Image(50, 50);   
+playerSprite_left.src = 'img/survivor1_left.png';
+var playerSprite_right = new Image(50, 50);   
+playerSprite_right.src = 'img/survivor1_right.png';
+var playerSprite_up = new Image(50, 50);   
+playerSprite_up.src = 'img/survivor1_up.png';
+var playerSprite_down = new Image(50, 50);   
+playerSprite_down.src = 'img/survivor1_down.png';
+
+var enemySprite_left = new Image(50, 50);   
+enemySprite_left.src = 'img/zombi1_left.png';
+var enemySprite_right = new Image(50, 50);   
+enemySprite_right.src = 'img/zombi1_right.png';
+var enemySprite_up = new Image(50, 50);   
+enemySprite_up.src = 'img/zombi1_up.png';
+var enemySprite_down = new Image(50, 50);   
+enemySprite_down.src = 'img/zombi1_down.png';
+
+// Game.prototype.rotateSprite = function(ctx, x, y, sprite, angle) {
+//   ctx.save();
+//   // ctx.translate(x + ctx.width / 2, y + ctx.height / 2);
+//   ctx.rotate(angle * Math.PI / 180);
+//   ctx.drawImage(sprite, x, y, 50, 50);
+//   ctx.restore();
+// }
 
 // Render on canvas the map with Sprites
 Game.prototype._renderMap = function () {
@@ -132,7 +156,21 @@ Game.prototype._drawMap = function () {
 
 // Render player on map
 Game.prototype._renderPlayer = function() {  
-  this.ctx.drawImage(playerSprite, this.player.currentRow * 50, this.player.currentCol * 50, 50, 50);
+  
+  switch (this.player.direction) {
+    case 'up':
+    this.ctx.drawImage(playerSprite_up, this.player.currentRow * 50, this.player.currentCol * 50, 50, 50);    
+    break;
+    case 'down':
+    this.ctx.drawImage(playerSprite_down, this.player.currentRow * 50, this.player.currentCol * 50, 50, 50);    
+    break;
+    case 'left':
+    this.ctx.drawImage(playerSprite_left, this.player.currentRow * 50, this.player.currentCol * 50, 50, 50);    
+    break;
+    case 'right':
+    this.ctx.drawImage(playerSprite_right, this.player.currentRow * 50, this.player.currentCol * 50, 50, 50);    
+    break;
+  };
 }
 
 // Drawing player on map
@@ -143,7 +181,22 @@ Game.prototype._drawPlayer = function() {
 
 // Render enemies on map
 Game.prototype._renderEnemy = function(enemy) {    
-  this.ctx.drawImage(enemySprite, enemy.currentRow * 50, enemy.currentCol * 50, 50, 50);  
+    
+  switch (enemy.direction) {
+    case 'up':
+    this.ctx.drawImage(enemySprite_up, enemy.currentRow * 50, enemy.currentCol * 50, 50, 50);    
+    break;
+    case 'down':
+    this.ctx.drawImage(enemySprite_down, enemy.currentRow * 50, enemy.currentCol * 50, 50, 50);    
+    break;
+    case 'left':
+    this.ctx.drawImage(enemySprite_left, enemy.currentRow * 50, enemy.currentCol * 50, 50, 50);    
+    break;
+    case 'right':
+    this.ctx.drawImage(enemySprite_right, enemy.currentRow * 50, enemy.currentCol * 50, 50, 50);    
+    break;
+  };
+
 }
 
 // Drawing enemies on map
