@@ -50,6 +50,28 @@ function main() {
   // Constructing the game  
   var ctx = canvas.getContext('2d');
 
+  // Musics and sounds
+  var generalSnd  = new Sound('');  
+  var splashMusic = new Sound('snd/TWD_Theme.mp3');
+  var inGameMusic = new Sound('snd/TheWay_InGame.mp3');  
+
+  // Building mutePage button  
+  var muteButton = document.createElement('button');  
+  muteButton.setAttribute('id', 'stopMusic');
+  muteButton.setAttribute('class', 'btn');
+  muteButton.setAttribute('style', 'margin-left:20px;');
+  var volumeIco = document.createElement('i');
+  muteButton.appendChild(volumeIco);
+  volumeIco.setAttribute('class','fas fa-volume-up');  
+  volumeIco.addEventListener('click', function changeIco(){    
+    if (volumeIco.className === 'fas fa-volume-up') {
+      volumeIco.removeAttribute('class','fas fa-volume-up');  
+      volumeIco.setAttribute('class','fas fa-volume-off'); 
+      // volumeIco.removeEventListener(volumeIco); 
+    } else volumeIco.setAttribute('class','fas fa-volume-up');      
+  });
+  muteButton.addEventListener('click', generalSnd.mutePage);
+
   var game = new Game({
     rows:       canvas.height / 50,
     cols:       canvas.width / 50,    
@@ -64,28 +86,36 @@ function main() {
   },buildGameOver, buildGameWin);
   
   // Main menu screen functions
-  function buildSplash() {    
+  function buildSplash() {        
+    splashMusic.play();
+    splashMusic.sound.loop = true;    
     document.body.appendChild(mainMenu);
     mainMenu.appendChild(btnWrapper)
     btnWrapper.appendChild(startButton);
+    btnWrapper.appendChild(muteButton);
   }
 
   function destroySplash() {        
-     mainMenu.remove();
-     buildGame();
+    splashMusic.stop(); 
+    mainMenu.remove();    
+         
+    buildGame();
   }  
   
   // Game loop
   function buildGame() {    
     document.body.appendChild(wrapper);
     wrapper.appendChild(canvas);
-    document.body.appendChild(countdownTimer);    
-    
+    inGameMusic.play();
+    inGameMusic.sound.loop = true;
+    document.body.appendChild(countdownTimer);        
+
     game.start();    
   }
 
   // Game over screen functions
   function buildGameOver() {
+    inGameMusic.stop();
     canvas.remove();
     countdownTimer.remove();        
     document.body.appendChild(gameOver);
@@ -94,12 +124,13 @@ function main() {
   }
 
   function destroyGameOver() {
-    gameOver.remove();   
+    gameOver.remove();    
     buildSplash();
   }
 
   // Game Win screen 
   function buildGameWin() {
+    inGameMusic.stop();
     canvas.remove();
     countdownTimer.remove();        
     document.body.appendChild(gameWin);
@@ -108,7 +139,7 @@ function main() {
   }
 
   function destroyGameWin() {
-    gameWin.remove();    
+    gameWin.remove();       
     buildSplash();
   }
 

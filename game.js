@@ -21,7 +21,10 @@ function Game(options, buildGameOver, buildGameWin) {
   this.enemies        = [];
   this.intervalGenerateEnemies = undefined;     
   this.frameCounter   = 0;
-  this.clock          = 11;    
+  this.clock          = 11;
+  this.deathSnd       = new Sound('snd/playerDeath.mp3');    
+  this.gameoverSnd    = new Sound('snd/GameOver.mp3');
+  this.weWonSnd       = new Sound('snd/weWON.mp3');
 }
 
 Game.prototype.generateEnemies = function() {
@@ -79,16 +82,12 @@ Game.prototype._resetStatus = function() {
 // wallSprite.onload = _renderMap; 
 var wallSprite = new Image(50, 50);   
 wallSprite.src = 'img/wall1.png';
-
 var floorSprite = new Image(50, 50);    
 floorSprite.src = 'img/floor1.png';
-
 var goalSprite = new Image(50, 50);   
 goalSprite.src = 'img/door1.png';
-
 var playerSprite = new Image(50, 50);   
 playerSprite.src = 'img/survivor1.png';
-
 var enemySprite = new Image(50, 50);   
 enemySprite.src = 'img/zombi1.png';
 
@@ -282,21 +281,26 @@ Game.prototype._update = function() {
   if (this.isWin === true) {
     clearInterval(this.countdownId);
     clearInterval(this.intervalGenerateEnemies);
-    console.log('YOU WIN!');            
+    console.log('YOU WIN!');
+    this.weWonSnd.play();            
     this.cbGameWin();
+    
     return    
   }  
   if (this.isEnd === true && this.isWin === false) {
     clearInterval(this.countdownId);
     clearInterval(this.intervalGenerateEnemies);      
+    this.deathSnd.play();
     console.log('GAME OVER!');        
-    this.cbGameOver();    
+    this.cbGameOver();
+    this.gameoverSnd.play();    
     return
   }
   if (this.clock <= 0) {
     // Stop countdownTimer
     console.log('TIME OUT!!');      
-    this.isEnd = true;                          
+    this.isEnd = true;
+    this.gameoverSnd.play();                          
   }
 }
 
