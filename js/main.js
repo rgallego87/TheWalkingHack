@@ -53,7 +53,10 @@ function main() {
   // Musics and sounds
   var generalSnd  = new Sound('');  
   var splashMusic = new Sound('snd/TWD_Theme.mp3');
-  var inGameMusic = new Sound('snd/TheWay_InGame.mp3');  
+  var inGameMusic = new Sound('snd/TheWay_InGame.mp3');
+  var deathSnd    = new Sound('snd/playerDeath.mp3');    
+  var gameoverSnd = new Sound('snd/GameOver.mp3');
+  var weWonSnd    = new Sound('snd/weWON.mp3');  
 
   // Building mutePage button  
   var muteButton = document.createElement('button');  
@@ -82,7 +85,29 @@ function main() {
     goalChar:   'G',
     enemyChar:  'E',       
     isEnd:      false,
-    isWin:      false,        
+    isWin:      false,
+    clock:      21,
+    deathSnd:   deathSnd,
+    gameoverSnd:gameoverSnd,
+    weWonSnd:   weWonSnd,
+    map: [
+      ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
+      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","G","W"],
+      ["W","F","F","F","F","W","F","W","W","W","W","W","W","W","F","W"],
+      ["W","F","W","W","F","W","F","W","F","W","F","F","F","F","F","W"],
+      ["W","F","W","F","F","W","F","W","F","W","F","F","F","F","F","W"],
+      ["W","F","W","F","W","W","F","W","F","F","F","F","F","F","F","W"],
+      ["W","F","W","F","F","F","F","F","F","W","F","F","W","W","W","W"],
+      ["W","F","W","W","W","W","W","W","F","W","F","F","F","F","F","W"],
+      ["W","F","F","F","F","F","F","F","F","W","W","W","W","W","F","W"],
+      ["W","F","W","F","F","F","F","F","F","F","F","W","F","F","F","W"],
+      ["W","F","W","F","W","W","W","W","W","W","F","W","F","W","F","W"],
+      ["W","F","W","F","W","F","F","F","F","F","F","W","F","W","W","W"],
+      ["W","F","W","F","W","F","W","W","W","W","F","W","F","F","F","W"],
+      ["W","F","W","F","W","F","W","F","F","W","F","W","W","W","F","W"],
+      ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+      ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
+    ],     
   },buildGameOver, buildGameWin);
   
   // Main menu screen functions
