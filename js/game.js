@@ -16,8 +16,8 @@ function Game(options, buildGameOver, buildGameWin) {
   this.clock          = options.clock;
   this.frameCounter   = 0;  
   this.player         = new Player({
-    currentRow: 14,   // InitialPlayerPos
     currentCol: 14,   // InitialPlayerPos   
+    currentRow: 8,   // InitialPlayerPos
   });      
   this.enemies        = [];
   this.intervalGenerateEnemies = undefined;     
