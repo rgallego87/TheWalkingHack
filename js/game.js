@@ -304,7 +304,7 @@ Game.prototype._update = function() {
     while(i < this.enemies.length) {
       
       this._renderEnemy(this.enemies[i]);            
-      if (this.frameCounter % 40 === 0) {  
+      if (this.frameCounter % 20 === 0) {  
         this._checkEnemyCollisions(this.enemies[i]);                        
       }
       i++      
@@ -338,8 +338,8 @@ Game.prototype._update = function() {
 
 Game.prototype.start = function() {
   this._resetStatus();
-  this.generateEnemies(1,1,2000,30);
-  this.generateEnemies(3,10,4000,10);    
+  this.generateEnemies(1,1,500,20);
+  this.generateEnemies(3,10,1000,10);    
   this.countdownControl();   
   this._defineControlKeys();
   this._update();    
