@@ -50,7 +50,25 @@ Game.prototype._resetStatus = function() {
   this.isEnd                = false;
   this.player.currentCol    = 14;  
   this.player.currentRow    = 8;
-  this.enemies              = [];  
+  this.enemies              = []; 
+  this.map = [
+    ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
+    ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","G","W"],
+    ["W","F","F","F","F","W","F","W","W","W","W","W","W","W","F","W"],
+    ["W","F","W","W","F","W","F","W","F","W","F","F","F","F","F","W"],
+    ["W","F","W","F","F","W","F","W","F","W","F","F","F","F","F","W"],
+    ["W","F","W","F","W","W","F","W","F","F","F","F","F","F","F","W"],
+    ["W","F","W","F","F","F","F","F","F","W","F","F","W","W","W","W"],
+    ["W","F","W","W","W","W","W","W","F","W","F","F","F","F","F","W"],
+    ["W","F","F","F","F","F","F","F","F","W","W","W","W","W","F","W"],
+    ["W","F","W","F","F","F","F","F","F","F","F","W","F","F","F","W"],
+    ["W","F","W","F","W","W","W","W","W","W","F","W","F","W","F","W"],
+    ["W","F","W","F","W","F","F","F","F","F","F","W","F","W","W","W"],
+    ["W","F","W","F","W","F","W","W","W","W","F","W","F","F","F","W"],
+    ["W","F","W","F","W","F","W","F","F","W","F","W","W","W","F","W"],
+    ["W","F","F","F","F","F","F","F","F","F","F","F","F","F","F","W"],
+    ["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","W"],
+  ];
 }
 
 // Temporal defining sprites
